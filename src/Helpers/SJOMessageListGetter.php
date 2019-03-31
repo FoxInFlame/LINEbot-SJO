@@ -115,8 +115,8 @@ class SJOMessageListGetter
 
     $messages = $html->find('#sidebar ul li');
     
-    foreach ($messages as $message) {
-
+    foreach ($messages as $index => $message) {
+      if ($index > 5) break;
       $link_parts = explode('/', $message->find('a', 0)->href);
       array_push($this->messages, end($link_parts));
     }

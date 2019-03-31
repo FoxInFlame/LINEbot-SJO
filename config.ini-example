@@ -9,6 +9,5 @@ SJO_password = "foobar"
 ; Login Post password
 SJO_post_password = "foobar"
 
-
-; Imgur client id for anonymous usage of Tex uploads
-imgur_client_id = ""
+; LINE Access Token
+access_token = ""

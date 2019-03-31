@@ -74,7 +74,7 @@ class HTMLMessageToLINEFlex
     $uri = 'http://www.s-j-o.jp/archives/' . $id;
 
     // Alt text has a max of 400
-    return '𝄡' . substr(htmlspecialchars_decode($title, ENT_QUOTES) . "\n\n古いLINEバージョン、又はパソコンをお使いの方はこちらから：" . $uri, 0, 390);
+    return '♬' . substr(htmlspecialchars_decode($title, ENT_QUOTES) . "\n\n古いLINEバージョン、又はパソコンをお使いの方はこちらから：" . $uri, 0, 390);
 
   }
 
@@ -132,7 +132,21 @@ class HTMLMessageToLINEFlex
 
     foreach($body_paragraphs as $key => $paragraph) {
 
-      if($paragraph === '') continue;
+      if($key > 14) {
+        $body_paragraphs_arr[] = [
+          'type' => 'text',
+          'text' => '.....続きはサイトで読みましょう',
+          'wrap' => true,
+          'size' => 'xxs',
+          'color' => '#ce7a16',
+          'margin' => 'lg'
+        ];
+        break;
+      }
+
+      $paragraph = str_replace("&nbsp;", '', $paragraph);
+
+      if(trim($paragraph) === '') continue;
       $paragraph_arr = [
         'type' => 'text',
         'text' => $paragraph,
@@ -199,7 +213,7 @@ class HTMLMessageToLINEFlex
       'contents' => [
         [
           'type' => 'text',
-          'text' => 'メッセージ ID',
+          'text' => '投稿 ID',
           'size' => 'xs',
           'color' => '#aaaaaa',
           'flex' => 0

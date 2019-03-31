@@ -97,7 +97,7 @@ class SJOAuthenticator
       ]
     );
 
-    if($postpassResponse->getStatusCode() === 200) {
+    if($postpassResponse->getStatusCode() !== 200) {
       throw new Exception('Invalid SJO post credentials provided.');
     }
 

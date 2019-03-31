@@ -1,11 +1,11 @@
 <?php
 
 /**
- * A part of the Kokusai IB 29th LINE Bot Webhook Receiver.
+ * A part of the Setagaya Junior Orchestra LINE Bot Webhook Receiver.
  * 
- * @since 0.1
+ * @since 1.0.0
  * @author Yuto Takano <moa17stock@gmail.com>
- * @version 1.0.1
+ * @version 1.0.0
  */
 
 namespace SJOLine\Helpers;
@@ -19,7 +19,7 @@ ini_set('display_errors', 1);
 /**
  * Core file for sending requests to LINE's API.
  * 
- * @since 0.1
+ * @since 1.0.0
  * @author Yuto Takano <moa17stock@gmail.com>
  */
 class LINERequest
@@ -49,7 +49,7 @@ class LINERequest
    * @param String $method HTTP Method for sending to the API
    * @param String $url The relative URL to the API
    * @param Array $post_data The POST data encoded into a string
-   * @since 0.1
+   * @since 1.0.0
    */
   public function prepare($method, $url, $post_data) {
     $this->method = $method;
@@ -60,7 +60,7 @@ class LINERequest
   /**
    * Send the prepared request.
    * 
-   * @since 0.1
+   * @since 1.0.0
    */
   public function send() {
 
@@ -72,7 +72,7 @@ class LINERequest
     ]);
     $send_data = [
       'headers' => [
-        'Authorization' => 'Bearer uBgDPwP+JjSKi9OahJu4yWJffmTqdhSSKwnOewXu4j/B2RgxKceO4OzAxRPedfTmoeWdKmxHweSg491JKJeXbFxaKwe58FiaMc5LAdqT3+siSFCg9PdIOhuh53TFGSOeixHMhe5y6i0imDdcSUKZ0wdB04t89/1O/w1cDnyilFU=',
+        'Authorization' => 'Bearer ' . ACCESS_TOKEN,
         'Content-Type' => 'application/json'
       ]
     ];

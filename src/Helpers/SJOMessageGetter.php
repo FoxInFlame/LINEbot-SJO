@@ -80,8 +80,8 @@ class SJOMessageGetter
 
     return [
       'title' => $title,
-      'date' => $date,
-      'content' => implode('<br><br>', $content)
+      'content' => implode('<br><br>', $content),
+      'date' => $date
     ];
 
   }

@@ -43,7 +43,7 @@ class SJOLine
       $messages_ids = $message_getter->getMessages();
 
       // Initiate a receiver, which checks if there are new messages, and sends the new ones
-      $receiver = new SJOMessageReceiver($messages_ids);
+      $receiver = new SJOMessageReceiver($sjo->session, $sjo->client, $messages_ids);
 
   }
 

@@ -12,6 +12,7 @@ namespace SJOLine\Receivers;
 
 use SJOLine\Helpers\LINERequest;
 use SJOLine\Helpers\HTMLMessageToLINEFlex;
+use SJOLine\Helpers\SJOMessageGetter;
 use \Exception;
 
 /**
@@ -29,7 +30,7 @@ class SJOMessageReceiver
    * @param Array $current_message_ids The array of IDs currently posted.
    * @since 1.0.0
    */
-  public function __construct($current_message_ids) {
+  public function __construct($session, $client, $current_message_ids) {
 
     // Create cache folder if not exist
     if(!file_exists(__DIR__ . '/../../app/cache')) {
@@ -43,12 +44,10 @@ class SJOMessageReceiver
     } else { 
 
       $previous_message_ids = @json_decode(
-        file_get_contents(__DIR__ . '/../../app/cache/IBMessages.json')
+        file_get_contents(__DIR__ . '/../../app/cache/Messages.json')
       , true) ?? [];
 
     }
-
-    file_put_contents(__DIR__ . '/../../app/cache/IBMessages.json', json_encode($current_message_ids));
 
     $new_message_ids = array_diff($current_message_ids, $previous_message_ids);
 
@@ -58,12 +57,12 @@ class SJOMessageReceiver
     // Loop for every message before every recipient
     foreach($new_message_ids as $new_message_id) {
 
-      $message_html_data = (new SJOMessageGetter())->getMessage($new_message_id);
+      $message_html_data = (new SJOMessageGetter($session, $client))->getMessage($new_message_id);
 
       $message_data = HTMLMessageToLINEFlex::convert(
         $new_message_id,
         $message_html_data['title'],
-        $message_html_data['body'],
+        $message_html_data['content'],
         $message_html_data['date']
       );
       
@@ -78,6 +77,8 @@ class SJOMessageReceiver
       $request->send();
 
     }
+    
+    file_put_contents(__DIR__ . '/../../app/cache/Messages.json', json_encode($current_message_ids));
 
   }
 
