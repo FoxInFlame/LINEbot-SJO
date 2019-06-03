@@ -68,7 +68,7 @@ class SJOMessageReceiver
       
       $request = new LINERequest();
       $request->prepare('POST', 'message/push', [
-        'to' => 'U5be75f0130106ee42c8fb194c302f7b9',
+        'to' => LINE_CHANNEL,
         'messages' => [
           $message_data
         ]

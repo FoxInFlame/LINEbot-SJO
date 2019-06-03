@@ -11,3 +11,6 @@ SJO_post_password = "foobar"
 
 ; LINE Access Token
 access_token = ""
+
+; LINE Channel
+channel = ""
