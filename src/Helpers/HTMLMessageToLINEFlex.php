@@ -149,7 +149,7 @@ class HTMLMessageToLINEFlex
       if(trim($paragraph) === '') continue;
       $paragraph_arr = [
         'type' => 'text',
-        'text' => $paragraph,
+        'text' => html_entity_decode($paragraph),
         'wrap' => true,
         'size' => 'xs',
         'margin' => 'none'
@@ -189,8 +189,8 @@ class HTMLMessageToLINEFlex
         'label' => 'サイトで読む',
         'uri' => $uri
       ],
-      'style' => 'link',
-      'color' => '#6488da',
+      'style' => 'primary',
+      'color' => '#0cc0e7',
       'margin' => 'lg',
       'height' => 'sm'
     ];
