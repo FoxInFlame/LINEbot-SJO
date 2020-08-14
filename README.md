@@ -3,7 +3,7 @@
 ---
 **NOTE**
 
-  This bot no longer works because Setagaya Junior Orchestra has renewed their website following several months of downtime. As I am no longer a member of said orchestra, I do not have access to the new login credentials; thus I can not and will not fix the code for this bot to accommdate for website changes.
+  This bot no longer works because Setagaya Junior Orchestra has renewed their website following several months of downtime. As I am no longer a member of said orchestra, I do not have access to the new login credentials; thus I can not and will not fix the code for this bot to accommodate for the website changes.
 
 ---
 
