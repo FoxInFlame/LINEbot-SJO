@@ -1,5 +1,12 @@
 # LINEbot-SJO
 
+---
+**NOTE**
+
+  This bot no longer works because Setagaya Junior Orchestra has renewed their website following several months of downtime. As I am no longer a member of said orchestra, I do not have access to the new login credentials; thus I can not and will not fix the code for this bot to accommdate for website changes.
+
+---
+
 This is a LINE bot written in PHP for the Setagaya Junior Orchestra.
 
 It grabs the messages posted in http://www.s-j-o.jp every 10 minutes, and posts it to the orchestra group LINE chat in a formatted embed.
