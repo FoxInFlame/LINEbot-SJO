@@ -3,6 +3,10 @@
 $config = parse_ini_file(__DIR__ . '/../config.ini');
 
 define('APP_ROOT', $config['app_root']);
+define('BASE_DIR', $config['base_dir']);
+define('PYTHON_BASE', $config['python_base']);
+putenv('PYTHONPATH=' . PYTHON_BASE);
+putenv('PYTHONIOENCODING=utf-8');
 
 define('SJO_LOGIN', $config['SJO_login']);
 define('SJO_PASSWORD', $config['SJO_password']);

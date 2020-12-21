@@ -33,17 +33,17 @@ class SJOLine
     $sjo = new SJOAuthenticator();
     $sjo->authenticate();
     
-      // Construct, and use the session we created before.
-      $message_getter = new SJOMessageListGetter(
-        $sjo->session,
-        $sjo->client
-      );
+    // Construct, and use the session we created before.
+    $message_getter = new SJOMessageListGetter(
+      $sjo->session,
+      $sjo->client
+    );
 
-      // Use the stored tokens to get the messages
-      $messages_ids = $message_getter->getMessages();
+    // Use the stored tokens to get the messages
+    $messages_ids = $message_getter->getMessages();
 
-      // Initiate a receiver, which checks if there are new messages, and sends the new ones
-      $receiver = new SJOMessageReceiver($sjo->session, $sjo->client, $messages_ids);
+    // Initiate a receiver, which checks if there are new messages, and sends the new ones
+    $receiver = new SJOMessageReceiver($sjo->session, $sjo->client, $messages_ids);
 
   }
 

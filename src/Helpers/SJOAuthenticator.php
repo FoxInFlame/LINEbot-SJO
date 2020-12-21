@@ -14,6 +14,8 @@ namespace SJOLine\Helpers;
 use GuzzleHttp;
 use DOMDocument;
 use Exception;
+use SJOLine\Helpers\ShellExec;
+use Sunra\PhpSimple\HtmlDomParser;
 
 /**
  * Construct a SJO session.
@@ -44,7 +46,7 @@ class SJOAuthenticator
   public function __construct() {
     
     $this->client = new GuzzleHttp\Client([
-      'base_uri' => 'http://www.s-j-o.jp/'
+      'base_uri' => 'https://s-j-o.jp/'
     ]);
 
   }
@@ -54,51 +56,66 @@ class SJOAuthenticator
    * 
    * @since 1.0.0
    */
-  public function authenticate() {
+  public function authenticate($tries = 0) {
 
     $cookieJar = new GuzzleHttp\Cookie\CookieJar;
 
+    $pageResponse = $this->client->request(
+      'GET',
+      'members',
+      [
+        'cookies' => $cookieJar,
+        'allow_redirects' => false
+      ]
+    );
+
+    $html = HtmlDomParser::str_get_html($pageResponse->getBody());
+    
+    $nonce = $html->find('#wpmem_login #_wpmem_login_nonce', 0)->value;
+    $captcha = $html->find('#wpmem_login img[alt="CAPTCHA"]', 0)->src;
+    $captcha_prefix = $html->find('#wpmem_login #siteguard_captcha_prefix', 0)->value;
+
+    (new ShellExec())->execute('/usr/bin/python3 ' . BASE_DIR . '/predict.py ' . escapeshellarg($captcha), null, $out, $out, 30);
+    $captcha_result = trim($out);
     $loginResponse = $this->client->request(
       'POST',
-      'wp/wp-login.php',
+      'members',
       [
         'cookies' => $cookieJar,
-        'allow_redirects' => false,
+        'allow_redirects' => true,
         'form_params' => [
+          '_wpmem_login_nonce' => $nonce,
+          '_wp_http_referer' => '/members',
           'log' => SJO_LOGIN,
           'pwd' => SJO_PASSWORD,
-          'rememberme' => 'forever',
-          'wp-submit' => 'ログイン',
-          'redirect_to' => 'http://www.s-j-o.jp/members'
+          'siteguard_captcha' => $captcha_result,
+          'siteguard_captcha_prefix' => $captcha_prefix,
+          'a' => 'login',
+          'Submit' => 'ログイン'
         ]
       ]
     );
 
-    if($loginResponse->getStatusCode() === 200) {
-      throw new Exception('Invalid SJO credentials provided.');
-    }
+    // if($loginResponse->getStatusCode() !== 302) {
+    //   throw new Exception('Invalid SJO credentials provided.');
+    // }
 
-    $final_location = $loginResponse->getHeader('Location')[0];
-
-    if(strpos($final_location, '/members') === false) {
-      throw new Exception('Invalid SJO credentials provided.');
-    }
+    $html = HtmlDomParser::str_get_html($loginResponse->getBody());
     
-    $postpassResponse = $this->client->request(
-      'POST',
-      'wp/wp-login.php?action=postpass',
-      [
-        'cookies' => $cookieJar,
-        'allow_redirects' => false,
-        'form_params' => [
-          'post_password' => SJO_POST_PASSWORD,
-          'Submit' => '確定'
-        ]
-      ]
-    );
+    $error = $html->find('#content #wpmem_msg', 0);
+    if ($error) {
+      // perhaps captcha was wrong, retry 3 times
+      if ($tries > 0) {
+        throw new Exception('Invalid SJO credentials provided, or CAPTCHA failed 3 times in a row.');
+      }
+      $this->authenticate($tries + 1); 
+      return;
+    }
 
-    if($postpassResponse->getStatusCode() !== 200) {
-      throw new Exception('Invalid SJO post credentials provided.');
+    // captcha passed but still couldn't log in 
+    $logged_in = $html->find('#content .logged-in', 0);
+    if (!$logged_in) {
+      throw new Exception('Invalid SJO credentials provided.');
     }
 
     $this->session = $cookieJar;

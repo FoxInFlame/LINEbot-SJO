@@ -2,6 +2,12 @@
 ; No slash required at the end
 app_root = "https://example.com/sjoLine"
 
+; Base directory for all files
+base_dir = "/var/www/html/sjo"
+
+; Where the modules (numpy, tensorflow, keras, etc) are located
+python_base = "/home/abc/.local/lib/python3.5/site-packages"
+
 ; Login ID
 SJO_login = "member"
 ; Login password
