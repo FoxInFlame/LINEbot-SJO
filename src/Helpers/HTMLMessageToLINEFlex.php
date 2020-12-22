@@ -132,7 +132,7 @@ class HTMLMessageToLINEFlex
       if($key > 14) {
         $body_paragraphs_arr[] = [
           'type' => 'text',
-          'text' => '.....字数制限により端折っていますので、続きはサイトで読みましょう',
+          'text' => '.....字数制限によりハショっています。続きはサイトで読みましょう',
           'wrap' => true,
           'size' => 'xxs',
           'color' => '#ce7a16',
