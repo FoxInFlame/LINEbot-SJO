@@ -63,49 +63,25 @@ class SJOMessageListGetter
    * @since 1.0.0
    */
   public function getMessages() {
-
-    $first_message_link = $this->getFirstMessage('/members');
-    $this->getMessageList($first_message_link);
+  
+    $this->getMessageList('/member_news');
 
     return $this->messages;
 
   }
 
   /**
-   * Get the first message so that we can load the list of messages in the sidebar
+   * Get the list of message IDs on the first page. 
+   * Do not overload the target server, and increase runtime by recursing all pages.
+   * This script is ran every 15/30 minutes anyway so there will never be over 12 items in this span (on the new layout).
    * 
-   * @param String $url The base relative URL for the messages
-   * @since 1.0.0
+   * @param String $url The base URL fragment for the message list
    */
-  private function getFirstMessage($url) {
-
-    $response = $this->client->request(
-      'GET',
-      $url,
-      [
-        'cookies' => $this->session
-      ]
-    );  
-
-    $html = HtmlDomParser::str_get_html($response->getBody());
-
-    $link = $html->find('#contents #main .post a', 0)->href;
-
-    // Free RAM and collect garbage
-    $html->clear();
-    gc_collect_cycles();
-
-    if(!$link) return;
-
-    return $link;
-
-  }
-
   private function getMessageList($url) {
 
     $response = $this->client->request(
       'GET',
-      $url,
+      $url . '/page/1',
       [
         'cookies' => $this->session
       ]
@@ -113,12 +89,11 @@ class SJOMessageListGetter
 
     $html = HtmlDomParser::str_get_html($response->getBody());
 
-    $messages = $html->find('#sidebar ul li');
+    $messages = $html->find('#content > .archive > section > .list article');
     
     foreach ($messages as $index => $message) {
-      if ($index > 5) break;
       $link_parts = explode('/', $message->find('a', 0)->href);
-      array_push($this->messages, end($link_parts));
+      array_push($this->messages, substr(end($link_parts), 0, -5));
     }
 
   }

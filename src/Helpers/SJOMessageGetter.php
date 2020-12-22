@@ -60,7 +60,7 @@ class SJOMessageGetter
 
     $response = $this->client->request(
       'GET',
-      '/archives/' . $id,
+      '/member_news/' . $id . '.html',
       [
         'cookies' => $this->session
       ]
@@ -68,10 +68,10 @@ class SJOMessageGetter
 
     $html = HtmlDomParser::str_get_html($response->getBody());
 
-    $post_info = $html->find('#contents #main', 0);
-    $title = $post_info->find('h1.title text', 0)->innertext;
-    $date = $post_info->find('.post-info ul li text', 0)->innertext;
-    $paragraphs = $post_info->find('p');
+    $post_info = $html->find('#content > .container > section', 0);
+    $title = $post_info->find('.meta_box > h1 text', 0)->innertext;
+    $date = $post_info->find('.meta_box > p.date text', 0)->innertext;
+    $paragraphs = $post_info->find('.entry-content p');
     $content = array_map(function($item) {
       return implode('', array_map(function($text) {
         return $text->innertext;
