@@ -6,7 +6,7 @@
  * 
  * @since 1.0.0
  * @author Yuto Takano <moa17stock@gmail.com>
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 namespace SJOLine\Helpers;
@@ -60,6 +60,7 @@ class SJOMessageListGetter
   /**
    * Get messages ids as an array.
    * 
+   * @return Array
    * @since 1.0.0
    */
   public function getMessages() {

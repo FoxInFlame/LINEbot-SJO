@@ -6,7 +6,7 @@
  * 
  * @since 1.0.0
  * @author Yuto Takano <moa17stock@gmail.com>
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 namespace SJOLine\Helpers;
@@ -53,7 +53,9 @@ class SJOAuthenticator
 
   /**
    * Login, and store the cookies' jar for further requests.
+   * Throws an exception if there is an error.
    * 
+   * @return Boolean Logged in = true
    * @since 1.0.0
    */
   public function authenticate($tries = 0) {

@@ -5,16 +5,13 @@
  * 
  * @since 1.0.0
  * @author Yuto Takano <moa17stock@gmail.com>
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 namespace SJOLine\Helpers;
 
 use GuzzleHttp;
 use \Exception;
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 /**
  * Core file for sending requests to LINE's API.

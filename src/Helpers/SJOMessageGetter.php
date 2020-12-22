@@ -6,7 +6,7 @@
  * 
  * @since 1.0.0
  * @author Yuto Takano <moa17stock@gmail.com>
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 namespace SJOLine\Helpers;
@@ -54,6 +54,8 @@ class SJOMessageGetter
   /**
    * Get message information as an array.
    * 
+   * @param String $id SJO Message ID
+   * @return Array 
    * @since 1.0.0
    */
   public function getMessage($id) {
