@@ -2,11 +2,14 @@
 
 This is a LINE bot written in PHP for the Setagaya Junior Orchestra.
 
-It grabs the messages posted in http://www.s-j-o.jp every 10 minutes, and posts it to the orchestra group LINE chat in a formatted embed.
+It grabs the messages posted in http://www.s-j-o.jp every 15 minutes, and posts it to the orchestra group LINE chat in a formatted embed.
 
-Running this on your own requires a LINE token (and of course a bot), and a server that can run cronjobs on `cronjob.php`.
+Running this on your own requires a LINE token (and of course a bot), and a web server that:
 
-This LINE bot was extended from my Kokusai IB Bot, another LINE bot that I developed. 
+- has PHP7 installed
+- can run cronjobs on `cronjob.php`
+- has tensorflow and keras (and the appropriate libraries like numpy) installed
+- has enough memory to carry out the CAPTCHA bypass prediction using [`konbu`](https://github.com/yutotakano/konbu)
 
 ## Screenshots
 
