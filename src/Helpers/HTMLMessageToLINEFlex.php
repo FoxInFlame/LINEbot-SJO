@@ -68,7 +68,7 @@ class HTMLMessageToLINEFlex
    */
   private static function generateAltText($id, $title, $body) {
 
-    $uri = 'http://www.s-j-o.jp/archives/' . $id;
+    $uri = 'http://www.s-j-o.jp/member_news/' . $id . '.html';
 
     // Alt text has a max of 400
     return '♬' . substr(htmlspecialchars_decode($title, ENT_QUOTES) . "\n\n古いLINEバージョン、又はパソコンをお使いの方はこちらから：" . $uri, 0, 390);
