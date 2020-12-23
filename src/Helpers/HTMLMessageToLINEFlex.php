@@ -177,7 +177,7 @@ class HTMLMessageToLINEFlex
    */
   private static function createButton($id) {
 
-    $uri = 'http://www.s-j-o.jp/archives/' . $id;
+    $uri = 'http://www.s-j-o.jp/member_news/' . $id . '.html';
 
     return [
       'type' => 'button',
