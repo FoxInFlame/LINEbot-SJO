@@ -1,3 +1,6 @@
+**Retired since 2021/12/25 because it became increasingly difficult to actively maintain and update the bot to the changes in the website.**
+
+
 # Relay Bot for Setagaya Junior Orchestra
 
 This is a LINE bot written in PHP for the Setagaya Junior Orchestra.
